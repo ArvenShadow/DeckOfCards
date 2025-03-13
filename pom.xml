@@ -180,7 +180,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        edu.ntnu.idi.idatt.Main
+                                        edu.ntnu.idi.idatt2003.DeckOfCardsApp
                                     </mainClass>
                                 </manifest>
                             </archive>
@@ -200,7 +200,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>edu.ntnu.idi.idatt.Main</mainClass>
+                            <mainClass>edu.ntnu.idi.idatt2003.DeckOfCardsApp</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
