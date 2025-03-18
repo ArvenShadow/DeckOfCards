@@ -55,4 +55,11 @@ public class CheckHand {
     }
     return true;
   }
+
+  public static int calculateHandValue(List<Card> hand) {
+    if (hand == null) {
+      return 0; // No cards, value is 0
+    }
+    return hand.stream().mapToInt(Card::getRankValue).sum();
+  }
 }

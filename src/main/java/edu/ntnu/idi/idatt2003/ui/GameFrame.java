@@ -28,6 +28,7 @@ public class GameFrame {
   private HBox cardDisplay; // Center section for displaying cards
   private Label infoBox; // Bottom section for check hand info
   private List<Card> currentHand; // To track the current dealt hand
+  private Label cardValueBox;
 
   public GameFrame(Stage stage) {
     this.stage = stage;
@@ -40,12 +41,16 @@ public class GameFrame {
     // CENTER: Card display
     cardDisplay = new HBox(20);
     cardDisplay.setPadding(new Insets(30));
-    cardDisplay.setStyle("-fx-background-color: #c97dbe;"); // Adds card background style
+    cardDisplay.setStyle("-fx-background-color: #c97dbe;");
 
     // LEFT: Button box
     buttonBox = new VBox(20);
     buttonBox.setPadding(new Insets(30));
-    buttonBox.setStyle("-fx-background-color: #d8bfd8;"); // Light purple background
+    buttonBox.setStyle("-fx-background-color: #d8bfd8;");
+
+    cardValueBox = new Label("Value of current hand: 0");
+    cardValueBox.setPadding(new Insets(10));
+    cardValueBox.setStyle("-fx-background-color: #c2f0c2; -fx-font-size: 14px;");
 
     Button rerollButton = new Button("Deal Hand");
     rerollButton.setOnAction(e -> rerollCards());
@@ -53,7 +58,11 @@ public class GameFrame {
     Button checkHandButton = new Button("Check Hand");
     checkHandButton.setOnAction(e -> checkAndDisplayHandRanking());
 
-    buttonBox.getChildren().addAll(rerollButton, checkHandButton);
+    cardValueBox = new Label("Value of current hand: 0");
+    cardValueBox.setPadding(new Insets(10));
+    cardValueBox.setStyle("-fx-background-color: #c2f0c2; -fx-font-size: 14px;");
+
+    buttonBox.getChildren().addAll(rerollButton, checkHandButton, cardValueBox);
 
     // BOTTOM: Info box
     infoBox = new Label("Game Info and Hand Rankings will appear here.");
@@ -90,6 +99,9 @@ public class GameFrame {
         );
         cardDisplay.getChildren().add(cardNode);
       }
+
+      int handValue = CheckHand.calculateHandValue(currentHand);
+      cardValueBox.setText("Value of current hand: " + handValue);
 
       // Update game info
       infoBox.setText("New hand dealt. Check the hand rank using the left panel.");

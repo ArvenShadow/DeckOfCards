@@ -19,6 +19,10 @@ public class Card {
     return suit;
   }
 
+  public int getRankValue() {
+    return rank.getValue();
+  }
+
   @Override
   public String toString() {
     return rank.getName() + " of " + suit.getName();
