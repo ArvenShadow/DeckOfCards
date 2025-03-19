@@ -24,10 +24,10 @@ public class GameFrame {
   private final Stage stage;
   private final DeckOfCards deck;
   private final Dealer dealer;
-  private VBox buttonBox; // Left section for buttons
-  private HBox cardDisplay; // Center section for displaying cards
-  private Label infoBox; // Bottom section for check hand info
-  private List<Card> currentHand; // To track the current dealt hand
+  private VBox buttonBox;
+  private HBox cardDisplay;
+  private Label infoBox;
+  private List<Card> currentHand;
   private Label cardValueBox;
 
   public GameFrame(Stage stage) {
@@ -48,6 +48,10 @@ public class GameFrame {
     buttonBox.setPadding(new Insets(30));
     buttonBox.setStyle("-fx-background-color: #d8bfd8;");
 
+    Button shuffleButton = new Button("Shuffle");
+    shuffleButton.setOnAction(e -> shuffleDeck());
+    buttonBox.getChildren().add(shuffleButton);
+
     cardValueBox = new Label("Value of current hand: 0");
     cardValueBox.setPadding(new Insets(10));
     cardValueBox.setStyle("-fx-background-color: #c2f0c2; -fx-font-size: 14px;");
@@ -67,15 +71,15 @@ public class GameFrame {
     // BOTTOM: Info box
     infoBox = new Label("Game Info and Hand Rankings will appear here.");
     infoBox.setPadding(new Insets(10));
-    infoBox.setStyle("-fx-background-color: #f4c2c2; -fx-font-size: 14px;"); // Light pink background with text style
+    infoBox.setStyle("-fx-background-color: #f4c2c2; -fx-font-size: 14px;");
 
-    // ROOT LAYOUT
+
     BorderPane root = new BorderPane();
-    root.setCenter(cardDisplay); // Cards displayed in the center
-    root.setLeft(buttonBox); // Button box placed on the left
-    root.setBottom(infoBox); // Info box placed at the bottom
+    root.setCenter(cardDisplay);
+    root.setLeft(buttonBox);
+    root.setBottom(infoBox);
 
-    // Setup the scene and stage
+
     Scene scene = new Scene(root, 800, 400, Color.GREEN);
     stage.setScene(scene);
     stage.setTitle("Card Game");
@@ -88,7 +92,7 @@ public class GameFrame {
   private void rerollCards() {
     cardDisplay.getChildren().clear();
     try {
-      currentHand = dealer.dealHand(deck, 5); // Deal a new hand of 5 cards
+      currentHand = dealer.dealHand(deck, 5);
 
       for (Card card : currentHand) {
         Node cardNode = CardFaceCreator.createFrontFace(
@@ -103,7 +107,7 @@ public class GameFrame {
       int handValue = CheckHand.calculateHandValue(currentHand);
       cardValueBox.setText("Value of current hand: " + handValue);
 
-      // Update game info
+
       infoBox.setText("New hand dealt. Check the hand rank using the left panel.");
     } catch (IllegalArgumentException e) {
       cardDisplay.getChildren().clear();
@@ -122,10 +126,17 @@ public class GameFrame {
       return;
     }
 
-    // Check the hand ranking
     CheckHand.HandRanking handRanking = CheckHand.checkHand(currentHand);
 
-    // Update the game info at the bottom
+
     infoBox.setText("Your hand is ranked as: " + handRanking);
+  }
+
+  private void shuffleDeck() {
+    deck.shuffle();
+    cardDisplay.getChildren().clear();
+    infoBox.setText("Deck shuffled and reset.");
+    cardValueBox.setText("Value of current hand: 0");
+    currentHand = null;
   }
 }

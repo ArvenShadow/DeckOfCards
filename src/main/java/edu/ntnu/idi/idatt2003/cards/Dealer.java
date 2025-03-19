@@ -19,8 +19,9 @@ public class Dealer {
 
     for (int i = 0; i < n; i++) {
       int randomIndex = random.nextInt(indexes.size());
-      hand.add(cards.get(indexes.get(randomIndex)));
+      hand.add(cards.get(indexes.remove(randomIndex)));
     }
+    deck.removeCards(hand);
     return hand;
   }
 }
