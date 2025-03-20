@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt2003.cards;
 
 import edu.ntnu.idi.idatt2003.cardsfx.Rank;
+import edu.ntnu.idi.idatt2003.cardsfx.Suit;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,5 +62,14 @@ public class CheckHand {
       return 0; // No cards, value is 0
     }
     return hand.stream().mapToInt(Card::getRankValue).sum();
+  }
+
+  public static int countHearts(List<Card> hand) {
+    if (hand == null || hand.isEmpty()) {
+      return 0; // No cards in the hand
+    }
+    return (int) hand.stream()
+      .filter(card -> card.getSuit() == Suit.HEARTS)
+      .count();
   }
 }

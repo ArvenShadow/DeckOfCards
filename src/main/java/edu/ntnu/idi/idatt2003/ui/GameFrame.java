@@ -29,6 +29,7 @@ public class GameFrame {
   private Label infoBox;
   private List<Card> currentHand;
   private Label cardValueBox;
+  private Label heartCountBox;
 
   public GameFrame(Stage stage) {
     this.stage = stage;
@@ -66,7 +67,11 @@ public class GameFrame {
     cardValueBox.setPadding(new Insets(10));
     cardValueBox.setStyle("-fx-background-color: #c2f0c2; -fx-font-size: 14px;");
 
-    buttonBox.getChildren().addAll(rerollButton, checkHandButton, cardValueBox);
+    heartCountBox = new Label("Number of Hearts in hand: 0");
+    heartCountBox.setPadding(new Insets(10));
+    heartCountBox.setStyle("-fx-background-color: #f2c2f2; -fx-font-size: 14px;");
+
+    buttonBox.getChildren().addAll(rerollButton, checkHandButton, cardValueBox, heartCountBox);
 
     // BOTTOM: Info box
     infoBox = new Label("Game Info and Hand Rankings will appear here.");
@@ -106,6 +111,9 @@ public class GameFrame {
 
       int handValue = CheckHand.calculateHandValue(currentHand);
       cardValueBox.setText("Value of current hand: " + handValue);
+
+      int heartCount = CheckHand.countHearts(currentHand);
+      heartCountBox.setText("Number of Hearts in hand: " + heartCount);
 
 
       infoBox.setText("New hand dealt. Check the hand rank using the left panel.");
